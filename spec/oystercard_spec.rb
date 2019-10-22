@@ -17,13 +17,12 @@ describe Oystercard do
       expect{ card.top_up(100) }.to raise_error("Maximum balance is £#{Oystercard::BALANCE_LIMIT}.")
     end
 
-    it "allows you to deduct money from the card" do
-      card.deduct(5)
-      expect(card.balance).to eq(-5)
+    it "raises an error when you touch in with less than £1 balance" do
+      expect{ card.touch_in }.to raise_error("Below £#{Oystercard::MINIMUM_BALANCE}.")
     end
 
-    it "raises an error, when you touch in with less than £1 balance" do
-      expect{ card.touch_in }.to raise_error("Below £#{Oystercard::MINIMUM_BALANCE}.")
+    it "reduces the balance by the minimum fare" do
+      expect { card.touch_out }.to change { card.balance }.by (-1)
     end
 
   end

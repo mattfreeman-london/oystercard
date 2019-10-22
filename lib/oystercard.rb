@@ -17,10 +17,6 @@ class Oystercard
     @balance = new_balance
   end
 
-  def deduct(debit)
-    @balance -= debit
-  end
-
   def in_journey?
     @in_journey
   end
@@ -32,7 +28,14 @@ class Oystercard
   end
 
   def touch_out
+    @balance -= 1
     @in_journey = false
+  end
+
+private
+
+  def deduct(debit)
+    @balance -= debit
   end
 
 end

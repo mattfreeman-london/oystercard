@@ -22,6 +22,10 @@ describe Oystercard do
       expect(card.balance).to eq(-5)
     end
 
+    it "raises an error, when you touch in with less than £1 balance" do
+      expect{ card.touch_in }.to raise_error("Below £#{Oystercard::MINIMUM_BALANCE}.")
+    end
+
   end
 
   context "is the card in use?" do
@@ -30,6 +34,7 @@ describe Oystercard do
     end
 
     it "allows you to touch in to start a journey" do
+      card.top_up(20)
       card.touch_in
       expect(card.in_journey?).to eq true
     end
